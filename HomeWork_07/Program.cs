@@ -26,16 +26,16 @@ namespace HomeWork_07
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            bool input_value; // Проверка на правильность ввода
+            #region необходимые переменные
             int select = 1; // Выбор пользователя
-            int select_case = 1; // Переменная выбора в кейсе 1
+            int select_case = 1; // Переменная выбора в кейсах
             List<Note> list_note = new List<Note>(); // Коллекция для хранения записей
-            Note nt = new Note(); // Объект для работы с методами
+            Note nt = new Note(); // Объект для работы с заметками
             char yes_no = 'д'; // Ответ пользователя
             string path_file; // Путь к файлу с заметками
             int note_count; // Колличество заметок
-            DateTime start_date; // Начало диапозона
-            DateTime finish_date; // Конец диапозона
+            Menu menu = new Menu(); // Для испольщования методов класса Menu
+            #endregion
 
             while (select != 6)
             {
@@ -49,18 +49,7 @@ namespace HomeWork_07
                     "6. Закрыть программу");
 
                 Console.Write("Ваш выбор: ");
-
-                do // Пользователь делает выбор
-                {
-                    input_value = int.TryParse(Console.ReadLine(), out select);
-                    if (select < 1 ^ select > 6)
-                    {
-                        Console.Write("Введите ещё раз: ");
-                        input_value = false;
-                    }
-                    else if (!input_value) Console.Write("Введите ещё раз: ");
-                }
-                while (!input_value);
+                select = menu.UserСhoice(1, 6); // Пользователь делает выбор
 
                 switch (select)
                 {
@@ -70,25 +59,13 @@ namespace HomeWork_07
                         while (select_case != 3)
                         {
                             Console.Clear();
-
                             Console.WriteLine("Выберите способ добавления записи:\n" +
                                             "1. Создать вручную\t" +
                                             "2. Сгенерировать программой\t" +
                                             "3. Выход в главное меню\n");
 
                             Console.Write("Ваш выбор: ");
-
-                            do // Пользователь делает выбор
-                            {
-                                input_value = int.TryParse(Console.ReadLine(), out select_case);
-                                if (select_case < 1 ^ select_case > 3)
-                                {
-                                    Console.Write("Введите ещё раз: ");
-                                    input_value = false;
-                                }
-                                else if (!input_value) Console.Write("Введите ещё раз: ");
-                            }
-                            while (!input_value);
+                            select_case = menu.UserСhoice(1, 3); // Пользователь делает выбор
 
                             switch (select_case)
                             {
@@ -101,14 +78,9 @@ namespace HomeWork_07
                                         list_note.Add(nt);
                                         Console.Clear();
 
-                                        do // Пользователь делает выбор
-                                        {
-                                            Console.WriteLine("Желаете добавить ещё запись?");
-                                            Console.Write("Введите н/д: ");
-                                            yes_no = Console.ReadKey(false).KeyChar;
-                                            yes_no = Char.ToLower(yes_no);
-                                        }
-                                        while (yes_no != 'н' && yes_no != 'д');
+                                        Console.Write("Желаете добавить ещё запись?");
+                                        yes_no = menu.UserChoiceYesNo();
+
                                         Console.Clear();
                                     }
                                     #endregion
@@ -119,20 +91,9 @@ namespace HomeWork_07
                                     Console.Clear();
 
                                     Console.Write("Укажите, какое колличество заметок нужно сгенерировать: ");
+                                    note_count = menu.UserСhoice(1, 1000); // Выбор пользователя
 
-                                    do // Проверка ввода
-                                    {
-                                        input_value = int.TryParse(Console.ReadLine(), out note_count);
-                                        if (note_count < 1 ^ note_count > 1000)
-                                        {
-                                            Console.Write("Введите ещё раз: ");
-                                            input_value = false;
-                                        }
-                                        else if (!input_value) Console.Write("Введите ещё раз: ");
-                                    }
-                                    while (!input_value);
-
-                                    for (int i = 0; i<note_count; i++)
+                                    for (int i = 0; i<note_count; i++) // Генерируем записи
                                     {
                                         nt = nt.AutoAddNote(list_note);
                                         list_note.Add(nt);
@@ -169,18 +130,7 @@ namespace HomeWork_07
                                                 "3. Выход в главное меню\n");
 
                                 Console.Write("Ваш выбор: ");
-
-                                do // Пользователь делает выбор
-                                {
-                                    input_value = int.TryParse(Console.ReadLine(), out select_case);
-                                    if (select_case < 1 ^ select_case > 3)
-                                    {
-                                        Console.Write("Введите ещё раз: ");
-                                        input_value = false;
-                                    }
-                                    else if (!input_value) Console.Write("Введите ещё раз: ");
-                                }
-                                while (!input_value);
+                                select_case = menu.UserСhoice(1, 3); // Пользователь делает выбор
 
                                 switch (select_case)
                                 {
@@ -228,18 +178,7 @@ namespace HomeWork_07
                                           "3. Выход в главное меню\n");
 
                         Console.Write("Ваш выбор: ");
-
-                        do // Пользователь делает выбор
-                        {
-                            input_value = int.TryParse(Console.ReadLine(), out select_case);
-                            if (select_case < 1 ^ select_case > 3)
-                            {
-                                Console.Write("Введите ещё раз: ");
-                                input_value = false;
-                            }
-                            else if (!input_value) Console.Write("Введите ещё раз: ");
-                        }
-                        while (!input_value);
+                        select_case = menu.UserСhoice(1, 3); // Пользователь делает выбор
 
                         switch (select_case)
                         {
@@ -255,24 +194,7 @@ namespace HomeWork_07
                                 #region
                                 Console.WriteLine("Укажите путь к файлу из которого нужно загрузить заметки:");
                                 path_file = Console.ReadLine();
-
-                                Console.WriteLine();
-                                do // Ввод даты пользователем
-                                {
-                                    Console.Write("Укажите дату (Начало диапозона) в формате - чис.мес.год: ");
-                                    input_value = DateTime.TryParse(Console.ReadLine(), out start_date);
-                                }
-                                while (!input_value);
-
-                                Console.WriteLine();
-                                do // Ввод даты пользователем
-                                {
-                                    Console.Write("Укажите дату (Конец диапозона) в формате - чис.мес.год: ");
-                                    input_value = DateTime.TryParse(Console.ReadLine(), out finish_date);
-                                }
-                                while (!input_value);
-
-                                list_note = nt.LoadNoteByDate(path_file, start_date, finish_date);
+                                list_note = nt.LoadNoteByDate(path_file);
                                 #endregion
                                 break;
                         }
@@ -303,18 +225,7 @@ namespace HomeWork_07
                                                   "4. Выход в главное меню\n");
 
                                 Console.Write("Ваш выбор: ");
-
-                                do // Пользователь делает выбор
-                                {
-                                    input_value = int.TryParse(Console.ReadLine(), out select_case);
-                                    if (select_case < 1 ^ select_case > 4)
-                                    {
-                                        Console.Write("Введите ещё раз: ");
-                                        input_value = false;
-                                    }
-                                    else if (!input_value) Console.Write("Введите ещё раз: ");
-                                }
-                                while (!input_value);
+                                select_case = menu.UserСhoice(1, 4); // Выбор пользователя
 
                                 switch (select_case)
                                 {

@@ -659,7 +659,7 @@ namespace HomeWork_07
         /// <param name="start_date">Начало диапозона дат</param>
         /// <param name="finish_date">Конец диапозона дат</param>
         /// <returns></returns>
-        public List<Note> LoadNoteByDate (string path_file, DateTime start_date, DateTime finish_date)
+        public List<Note> LoadNoteByDate (string path_file)
         {
             List<Note> result = new List<Note>(); // Коллекция в которую будут сохраняться заметки из файла
             int note_number; // Номер заметки
@@ -670,6 +670,26 @@ namespace HomeWork_07
             string important_note_str; // Отметка о важности в строке
             Note nt = new Note(); // Сформированная заметка
             string number; // Переменная управления циклом
+            bool input_value; // Проверка ввода
+            DateTime start_date; // Начало диапозона
+            DateTime finish_date; // Конец диапозона
+
+
+            Console.WriteLine();
+            do // Ввод даты пользователем
+            {
+                Console.Write("Укажите дату (Начало диапозона) в формате - чис.мес.год: ");
+                input_value = DateTime.TryParse(Console.ReadLine(), out start_date);
+            }
+            while (!input_value);
+
+            Console.WriteLine();
+            do // Ввод даты пользователем
+            {
+                Console.Write("Укажите дату (Конец диапозона) в формате - чис.мес.год: ");
+                input_value = DateTime.TryParse(Console.ReadLine(), out finish_date);
+            }
+            while (!input_value);
 
             // Поток для чтения из файла
             using (StreamReader sr = new StreamReader(path_file, System.Text.Encoding.Unicode))
