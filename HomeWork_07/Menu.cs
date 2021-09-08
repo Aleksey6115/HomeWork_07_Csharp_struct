@@ -20,13 +20,12 @@ namespace HomeWork_07
             do
             {
                 result = Console.ReadLine();
-                if (result == null) Console.Write("Введите ещё раз: ");
+                if (result.Length == 0) Console.Write("Введите ещё раз: ");
             }
-            while (result == null);
+            while (result.Length == 0);
             return result;
             
         }
-
 
         /// <summary>
         /// Метод проверяет ввод на правильность 
