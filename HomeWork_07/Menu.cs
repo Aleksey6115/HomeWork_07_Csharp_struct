@@ -11,6 +11,24 @@ namespace HomeWork_07
     class Menu
     {
         /// <summary>
+        /// Метод проверяет вводимую строку, строка не может иметь пустое значение
+        /// </summary>
+        /// <returns></returns>
+        public string UserChoiceString()
+        {
+            string result;
+            do
+            {
+                result = Console.ReadLine();
+                if (result == null) Console.Write("Введите ещё раз: ");
+            }
+            while (result == null);
+            return result;
+            
+        }
+
+
+        /// <summary>
         /// Метод проверяет ввод на правильность 
         /// </summary>
         /// <param name="min_select">Возможный минимум значения</param>
@@ -195,7 +213,7 @@ namespace HomeWork_07
                         else
                         {
                             Console.WriteLine("Укажите путь к файлу в который нужно записать заметки:");
-                            path_file = Console.ReadLine();
+                            path_file = menu.UserChoiceString();
                             nt.UnloadNote(path_file, list_note);
                         }
                         #endregion
@@ -218,7 +236,7 @@ namespace HomeWork_07
                             case 1: // Загрузить все замеки из файла
                                 #region
                                 Console.WriteLine("Укажите путь к файлу из которого нужно загрузить заметки:");
-                                path_file = Console.ReadLine();
+                                path_file = menu.UserChoiceString();
                                 list_note = nt.LoadNote(path_file);
                                 #endregion
                                 break;
@@ -226,7 +244,7 @@ namespace HomeWork_07
                             case 2: // Загрузить заметки из диапозона дат
                                 #region
                                 Console.WriteLine("Укажите путь к файлу из которого нужно загрузить заметки:");
-                                path_file = Console.ReadLine();
+                                path_file = menu.UserChoiceString();
                                 list_note = nt.LoadNoteByDate(path_file);
                                 #endregion
                                 break;
